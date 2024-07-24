@@ -20,7 +20,9 @@ class TagController extends Controller
     }
 
     public function store(Request $request){
-        // dd($request->all());
+        $request->validate([
+            'name' => 'required|unique:tags'
+        ]);
 
         // write logic to save the databade
         $tags = new Tag();
@@ -37,6 +39,9 @@ class TagController extends Controller
     }
 
     public function update(Request $request, $id){
+        $request->validate([
+            'name' => 'required|unique:tags'
+        ]);
         $tags = Tag::findOrFail($id);
         $tags->name = $request->name;
         $tags->save();

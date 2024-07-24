@@ -19,23 +19,30 @@ class CategoryController extends Controller
     }
 
     public function store(Request $request){
-        // dd($request->all());
+        // step1 :validation the data
+        $request->validate([
+            'name' => 'required|unique:categories'
+        ]);
 
-        // write logic to save the databade
+        // step 2: write logic to save the databade
         $category = new Category();
         $category->name = $request->name; //$request is the user input
 
         $category->save();
-        // redirect
+        // step 3:  redirect
 
         return redirect()->route('admin.category.index');
     }
     public function edit($id){
+        
         $category = Category::findOrFail($id);
         return view('admin.category.edit',['category' => $category]);
     }
 
     public function update(Request $request, $id){
+        $request->validate([
+            'name' => 'required|unique:categories'
+        ]);
         $category = Category::findOrFail($id);
         $category->name = $request->name;
         $category->save();
