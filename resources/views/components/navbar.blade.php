@@ -45,7 +45,7 @@
                 </li>
                 <li><hr class="dropdown-divider" /></li>
                 <li>
-                  <a class="dropdown-item" href="./admin/post/index.html"
+                  <a class="dropdown-item" href="{{route('admin.post.index')}}"
                     >Post</a
                   >
                 </li>

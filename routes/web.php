@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\TagController;
+use App\Http\Controllers\Admin\PostController;
 
 // Display home
 Route::get('/', function () {
@@ -58,4 +59,27 @@ Route::prefix('admin')->group(function () {
 
     // Form to delete Tag
     Route::delete('tag/{id}', [TagController::class, 'destroy'])->name('admin.tag.destroy');
+});
+
+//-------------------------------------------------------
+// Tag routes
+Route::prefix('admin')->group(function () {
+    
+    // List Tag
+    Route::get('post', [PostController::class, 'index'])->name('admin.post.index');
+
+    // Form to create Tag
+    Route::get('post/create', [PostController::class, 'create'])->name('admin.post.create');
+
+    // Form to edit Tag
+    Route::get('post/{id}', [PostController::class, 'edit'])->name('admin.post.edit');
+
+    // Form to store new Tag
+    Route::post('post/store', [PostController::class, 'store'])->name('admin.post.store');
+
+    // Form to update Tag
+    Route::put('post/{id}', [PostController::class, 'update'])->name('post.post.update');
+
+    // Form to delete Tag
+    Route::delete('post/{id}', [PostController::class, 'destroy'])->name('admin.post.destroy');
 });
