@@ -5,25 +5,24 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Post;
+use App\Models\Category;
+use App\Models\Tag;
 
 class PostController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        // $posts = Post::all();
-        
-        return view('admin.post.index' /*, ['posts'=> $posts]*/);
+
+        return view('admin.post.index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+   
     public function create()
     {
-        return view('admin.post.create');
+        $categories = Category::all();
+        $tags = Tag::all();
+        
+        return view('admin.post.create' , ['categories'=> $categories, "tags"=> $tags]);
     }
 
     /**
@@ -31,7 +30,32 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+       $request->validate([
+        'title' => 'required',
+        'content' => 'required',
+        'thumnail' => 'required|mimes:jpg,jpeg,png|max:2048',
+        'category_id' => 'required|exists:categories,id',
+
+       ]);
+       $filename = time().'.'.$request->thumnail->getClientOriginalName();
+       $filePath = $request->file('thumnail')->storeAs(
+        'uploads', $filename, 'public'
+       );
+
+       $post = new Post();
+       $post->title = $request->title;
+       $post->content = $request->content;
+       $post->thumnail = $filePath;
+       $post->category_id = $request->category_id;
+       $post->save();
+
+       //tag
+       $post->tags()->sync($request->tags);
+
+       return redirect()->route('admin.post.index');
+
+
+
     }
 
     /**

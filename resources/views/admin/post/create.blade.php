@@ -12,7 +12,7 @@
         <!-- Blog entries-->
         <div class="col-lg-12">
           <div class="card p-3">
-            <form method="POST" action="{{route('admin.post.store')}}">
+            <form method="POST" action="{{route('admin.post.store')}}" enctype="multipart/form-data">
               @csrf
               <div class="mb-3">
                 <label for="title" class="form-label">Title</label>
@@ -39,66 +39,44 @@
                 <input
                   class="form-control"
                   type="file"
-                  id="thumbnail"
-                  name="thumbnail"
+                  id="thumnail"
+                  name="thumnail"
                 />
               </div>
               <div class="mb-3">
-                <label for="category" class="form-label">Category</label>
+                <label for="category_id" class="form-label">Category</label>
                 <select
                   class="form-select"
-                  name="category"
+                  name="category_id"
                   aria-label="Default select example"
                 >
                   <option selected>Select Category</option>
-                  <option value="1">Category 1</option>
-                  <option value="2">Category 2</option>
-                  <option value="3">Category 3</option>
+                  @foreach ($categories as $category)
+                    <option value="{{$category->id}}">{{$category->name}}</option>
+                  @endforeach
+                  
+                  
                 </select>
               </div>
               <div class="mb-3">
                 <label for="tags" class="form-label">Tag</label>
                 <div class="tag-wrapper">
+                  @foreach ($tags as $tag)
                   <div class="form-check form-check-inline">
                     <input
                       class="form-check-input"
                       type="checkbox"
                       name="tags[]"
-                      value="tag1"
-                      id="tag1"
+                      value="{{ $tag->id}}"
+                      id="tag{{ $tag->id}}"
                     />
-                    <label class="form-check-label" for="tag1">Tag 1</label>
+                    <label class="form-check-label" for="tag{{ $tag->id}}">{{ $tag->name}}</label>
                   </div>
-                  <div class="form-check form-check-inline">
-                    <input
-                      class="form-check-input"
-                      type="checkbox"
-                      name="tags[]"
-                      value="tag2"
-                      id="tag2"
-                    />
-                    <label class="form-check-label" for="tag2">Tag 2</label>
-                  </div>
-                  <div class="form-check form-check-inline">
-                    <input
-                      class="form-check-input"
-                      type="checkbox"
-                      name="tags[]"
-                      value="tag3"
-                      id="tag3"
-                    />
-                    <label class="form-check-label" for="tag3">Tag 3</label>
-                  </div>
-                  <div class="form-check form-check-inline">
-                    <input
-                      class="form-check-input"
-                      type="checkbox"
-                      name="tags[]"
-                      value="tag4"
-                      id="tag4"
-                    />
-                    <label class="form-check-label" for="tag4">Tag 4</label>
-                  </div>
+
+                  @endforeach
+                  
+                    
+
                 </div>
               </div>
 
@@ -106,6 +84,16 @@
             </form>
           </div>
         </div>
+
+        @if($errors->any())
+        <div class="alert alert-danger">
+          <ul>
+            @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+            @endforeach
+            </ul>
+            </div>
+        @endif
       </div>
     </div>
 @endsection
