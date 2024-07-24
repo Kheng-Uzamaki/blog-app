@@ -21,9 +21,9 @@ Route::get('admin/category/{id}',[CategoryController::class,'edit'])->name('admi
 Route::post('admin/category/store',[CategoryController::class,'store'])->name('admin.category.store');
 
 //update
-Route::put('admin/tag/{id}',[CategoryController::class,'update'])->name('admin.category.update');
+Route::put('admin/category/{id}',[CategoryController::class,'update'])->name('admin.category.update');
 //delete
-Route::delete('admin/tag/{id}',[CategoryController::class,'destroy'])->name('admin.category.destroy');
+Route::delete('admin/category/{id}',[CategoryController::class,'destroy'])->name('admin.category.destroy');
 
 //--------------------------------------------------
 Route::get('admin/tag',[TagController::class,'index'])->name('admin.tag.index');
