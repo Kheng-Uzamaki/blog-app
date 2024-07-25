@@ -15,6 +15,9 @@ class Post extends Model
      public function tags(){
         return $this->belongsToMany(Tag::class);
     }
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
     protected function image(): Attribute{
         return Attribute::make(
             get: fn($value) => asset('storage/'.$this->thumnail),
