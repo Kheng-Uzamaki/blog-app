@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\Admin\PostController;
+use App\Http\Controllers\AuthController;
 
 // Display home
 Route::get('/', function () {
@@ -15,8 +16,14 @@ Route::get('/article', function () {
     return view('article');
 })->name('article');
 
+Route::get('/login', [AuthController::class, 'login'])->name('login');
+Route::post('/authenticate', [AuthController::class, 'authenticate'])->name('authenticate');
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+
+
 // Category routes
-Route::prefix('admin')->group(function () {
+Route::prefix('admin')->middleware('auth')->group(function () {
     
     // List Category
     Route::get('category', [CategoryController::class, 'index'])->name('admin.category.index');
@@ -40,7 +47,7 @@ Route::prefix('admin')->group(function () {
 //--------------------------------------------------
 
 // Tag routes
-Route::prefix('admin')->group(function () {
+Route::prefix('admin')->middleware('auth')->group(function () {
     
     // List Tag
     Route::get('tag', [TagController::class, 'index'])->name('admin.tag.index');
@@ -63,7 +70,7 @@ Route::prefix('admin')->group(function () {
 
 //-------------------------------------------------------
 // Tag routes
-Route::prefix('admin')->group(function () {
+Route::prefix('admin')->middleware('auth')->group(function () {
     
     // List Tag
     Route::get('post', [PostController::class, 'index'])->name('admin.post.index');
@@ -78,7 +85,7 @@ Route::prefix('admin')->group(function () {
     Route::post('post/store', [PostController::class, 'store'])->name('admin.post.store');
 
     // Form to update Tag
-    Route::put('post/{id}', [PostController::class, 'update'])->name('post.post.update');
+    Route::put('post/{id}', [PostController::class, 'update'])->name('admin.post.update');
 
     // Form to delete Tag
     Route::delete('post/{id}', [PostController::class, 'destroy'])->name('admin.post.destroy');

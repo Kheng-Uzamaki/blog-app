@@ -23,6 +23,8 @@
             <li class="nav-item">
               <a class="nav-link active" href="#">Category 3</a>
             </li>
+            
+            @if(auth()->check())
             <li class="nav-item dropdown">
               <a
                 class="nav-link dropdown-toggle"
@@ -51,6 +53,20 @@
                 </li>
               </ul>
             </li>
+              <li class="nav-item">
+              <form method="POST" action="{{ route('logout') }}">
+                              @csrf
+                              <button class="nav-link active" type="submit" role="button">Logout</button>
+                          </form>
+              
+            </li>
+            @else
+              <li class="nav-item">
+              <a class="nav-link active" href="{{route('login')}}">Login</a>
+            </li>
+            @endif
+            
+            
           </ul>
         </div>
       </div>
