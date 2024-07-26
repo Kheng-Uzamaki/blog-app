@@ -14,15 +14,13 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-              <a class="nav-link" href="#">Category 1</a>
+            @foreach($nav_categories as $navcategory)
+                <li class="nav-item">
+              <a class="nav-link" href="{{route('home', ['category_id' => $navcategory->id])}}">{{$navcategory->name}}</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Category 2</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active" href="#">Category 3</a>
-            </li>
+            @endforeach
+            
+
             
             @if(auth()->check())
             <li class="nav-item dropdown">
