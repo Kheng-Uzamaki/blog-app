@@ -57,7 +57,7 @@
             <div class="col-lg-6">
               <!-- Blog post-->
               <div class="card mb-4">
-                <a href="{{route('article')}}"
+                <a href="{{route('article', ['id'=> $post->id])}}"
                   ><img
                     class="card-img-top post-card-img"
                     src="{{$post->image}}"
@@ -69,7 +69,7 @@
                   <p class="card-text post-item-content">
                     {{$post->content}}
                   </p>
-                  <a class="btn btn-primary" href="{{route('article')}}">Read more →</a>
+                  <a class="btn btn-primary" href="{{route('article', ['id'=> $post->id])}}">Read more →</a>
                 </div>
               </div>
             </div>

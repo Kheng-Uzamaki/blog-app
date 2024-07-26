@@ -11,9 +11,7 @@ use App\Http\Controllers\HomeController;
 Route::get('/', [HomeController::class, 'index'])->name('home'); // Route for home page
 
 // Display Article
-Route::get('/article', function () {
-    return view('article');
-})->name('article');
+Route::get('/article/{id}', [HomeController::class, 'article'])->name('article'); // Route for article page
 
 Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/authenticate', [AuthController::class, 'authenticate'])->name('authenticate');
