@@ -5,11 +5,10 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\HomeController;
 
 // Display home
-Route::get('/', function () {
-    return view('index');
-})->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('home'); // Route for home page
 
 // Display Article
 Route::get('/article', function () {
