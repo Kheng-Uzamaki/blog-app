@@ -22,7 +22,8 @@ class HomeController extends Controller
                 $sub_query->where('id', $tag_id);
             });
         })
-        ->paginate(8); // get all posts
+        ->paginate(8)
+        ->withQueryString(); // get all posts
        
 
     return view('index', [

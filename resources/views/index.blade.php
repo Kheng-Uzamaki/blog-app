@@ -53,27 +53,33 @@
                 </div>
               </div>
             </div> --}}
-            @foreach($posts as $post)
-            <div class="col-lg-6">
-              <!-- Blog post-->
-              <div class="card mb-4">
-                <a href="{{route('article', ['id'=> $post->id])}}"
-                  ><img
-                    class="card-img-top post-card-img"
-                    src="{{$post->image}}"
-                    alt="..."
-                /></a>
-                <div class="card-body">
-                  <div class="small text-muted">{{$post->created_at->format('F d, Y')}}</div>
-                  <h2 class="card-title h4 post-title">{{$post->title}}</h2>
-                  <p class="card-text post-item-content">
-                    {{$post->content}}
-                  </p>
-                  <a class="btn btn-primary" href="{{route('article', ['id'=> $post->id])}}">Read more →</a>
+            @if( count($posts) > 0 )
+              @foreach($posts as $post)
+                <div class="col-lg-6">
+                  <!-- Blog post-->
+                  <div class="card mb-4">
+                    <a href="{{route('article', ['id'=> $post->id])}}"
+                      ><img
+                        class="card-img-top post-card-img"
+                        src="{{$post->image}}"
+                        alt="..."
+                    /></a>
+                    <div class="card-body">
+                      <div class="small text-muted">{{$post->created_at->format('F d, Y')}}</div>
+                      <h2 class="card-title h4 post-title">{{$post->title}}</h2>
+                      <p class="card-text post-item-content">
+                        {{$post->content}}
+                      </p>
+                      <a class="btn btn-primary" href="{{route('article', ['id'=> $post->id])}}">Read more →</a>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-            @endforeach
+              @endforeach
+            @else
+                <h1>No Post Found...</h1>
+            @endif
+
+
            
           </div>
           <!-- Pagination-->
