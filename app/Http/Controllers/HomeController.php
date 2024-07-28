@@ -4,21 +4,29 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Post;
-use App\Models\Category;
-use App\Models\Tag;
 
 class HomeController extends Controller
 {
-    public function index(){
-       $posts = Post::paginate(8); // get all posts
-    $categories = Category::all(); // get all categories
-    $tags = Tag::all(); // get all tags
+    public function index(Request $request){
+        
+       $posts = Post::when($request->category_id, function(
+        $query, $category_id) {
+            $query->where('category_id', $category_id);
+        })
+        ->when($request->search, function($query, $search) {
+            $query->where('title', 'like', '%' . $search . '%');
+        })
+        ->when($request->tag_id, function(
+        $query, $tag_id) {
+            $query->whereHas('tags', function($sub_query) use($tag_id){
+                $sub_query->where('id', $tag_id);
+            });
+        })
+        ->paginate(8); // get all posts
+       
 
     return view('index', [
-        'posts' => $posts,
-        'nav_categories' => $categories,
-        'tags' => $tags
-    ]);
+        'posts' => $posts]);
     }
     public function article(Request $request, $id){
         $post = Post::findOrFail( $id );
