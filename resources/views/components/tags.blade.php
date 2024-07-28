@@ -2,9 +2,9 @@
             <div class="card-header">Tags</div>
             <div class="card-body">
               <div class="row">
-                @foreach($tags as $tag)
+                @foreach($nav_tags as $tag)
                   <div class="col-sm-6">
-                    <a href="#!">{{$tag->name}}</a>
+                    <a href="{{route('home', ['tag_id' => $tag->id])}}">{{$tag->name}}</a>
                   </div>
                 @endforeach
                 </div>
